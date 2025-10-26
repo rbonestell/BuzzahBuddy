@@ -1,6 +1,4 @@
-# BuzzahBuddy
-
-![BuzzahBuddy](BuzzahBuddy/Resources/Images/title.svg)
+![BuzzahBuddy](readme-logo.svg)
 
 ## Overview
 
