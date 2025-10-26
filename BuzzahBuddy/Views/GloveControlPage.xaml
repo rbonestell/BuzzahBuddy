@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BuzzahBuddy.ViewModels"
+             xmlns:models="clr-namespace:BuzzahBuddy.Models"
+             x:Class="BuzzahBuddy.Views.GloveControlPage"
+             x:DataType="vm:GloveControlViewModel"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="25">
+
+            <!-- Header -->
+            <Label Text="Glove Control"
+                   Style="{StaticResource Headline}"
+                   SemanticProperties.HeadingLevel="Level1"
+                   HorizontalOptions="Center" />
+
+            <!-- Battery Status -->
+            <Border Padding="15"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}"
+                    StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Label Text="Battery:"
+                           FontSize="16"
+                           VerticalOptions="Center" />
+                    <Label Text="{Binding BatteryLevel, StringFormat='{0}%'}"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           SemanticProperties.Description="Device battery level" />
+                    <Button Text="🔄"
+                            Command="{Binding RefreshBatteryCommand}"
+                            HeightRequest="36"
+                            WidthRequest="36"
+                            CornerRadius="18"
+                            Padding="0"
+                            SemanticProperties.Hint="Refresh battery level"
+                            AutomationId="RefreshBatteryButton" />
+                </HorizontalStackLayout>
+            </Border>
+
+            <!-- Pattern Selection -->
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Vibration Pattern"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       SemanticProperties.HeadingLevel="Level2" />
+
+                <Picker ItemsSource="{Binding AvailablePatterns}"
+                        SelectedItem="{Binding SelectedPattern}"
+                        ItemDisplayBinding="{Binding Name}"
+                        FontSize="16"
+                        HeightRequest="48"
+                        SemanticProperties.Description="Select vibration pattern"
+                        AutomationId="PatternPicker" />
+
+                <Label Text="{Binding SelectedPattern.Description}"
+                       FontSize="14"
+                       TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"
+                       IsVisible="{Binding SelectedPattern.Description, Converter={StaticResource StringNotNullOrEmptyConverter}}"
+                       LineBreakMode="WordWrap" />
+            </VerticalStackLayout>
+
+            <!-- Pattern Details -->
+            <Border Padding="15"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SecondaryLight}, Dark={StaticResource Gray900}}"
+                    IsVisible="{Binding SelectedPattern, Converter={StaticResource IsNotNullConverter}}"
+                    StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="15" RowSpacing="10">
+                    <Label Grid.Row="0" Grid.Column="0"
+                           Text="Intensity:"
+                           FontSize="14" />
+                    <Label Grid.Row="0" Grid.Column="1"
+                           Text="{Binding SelectedPattern.Intensity, StringFormat='{0}%'}"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           HorizontalOptions="End" />
+
+                    <Label Grid.Row="1" Grid.Column="0"
+                           Text="Frequency:"
+                           FontSize="14" />
+                    <Label Grid.Row="1" Grid.Column="1"
+                           Text="{Binding SelectedPattern.FrequencyHz, StringFormat='{0} Hz'}"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           HorizontalOptions="End" />
+
+                    <Label Grid.Row="2" Grid.Column="0"
+                           Text="Mode:"
+                           FontSize="14" />
+                    <Label Grid.Row="2" Grid.Column="1"
+                           Text="{Binding SelectedPattern.IsContinuous, Converter={StaticResource ContinuousModeConverter}}"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           HorizontalOptions="End" />
+                </Grid>
+            </Border>
+
+            <!-- Main Control Button -->
+            <Button Text="{Binding VibrationButtonText}"
+                    Command="{Binding ToggleVibrationCommand}"
+                    HeightRequest="72"
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    CornerRadius="16"
+                    IsEnabled="{Binding IsNotBusy}"
+                    BackgroundColor="{Binding IsVibrating, Converter={StaticResource VibrationButtonColorConverter}}"
+                    SemanticProperties.Hint="Toggle vibration on or off"
+                    SemanticProperties.Description="Main vibration control button"
+                    AutomationId="ToggleVibrationButton" />
+
+            <!-- Test Button -->
+            <Button Text="Test Connection"
+                    Command="{Binding TestConnectionCommand}"
+                    HeightRequest="56"
+                    FontSize="16"
+                    CornerRadius="12"
+                    IsEnabled="{Binding IsNotBusy}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource PrimaryDark}}"
+                    SemanticProperties.Hint="Send a brief test pulse to the glove"
+                    SemanticProperties.Description="Test connection with brief vibration pulse"
+                    AutomationId="TestConnectionButton" />
+
+            <!-- Info Card -->
+            <Border Padding="15"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}"
+                    Margin="0,20,0,0"
+                    StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+
+                <Label FontSize="14"
+                       LineBreakMode="WordWrap"
+                       Text="Select a vibration pattern and press 'Start Vibration' to begin therapy. Your session will be automatically tracked."
+                       SemanticProperties.Description="Usage instructions" />
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

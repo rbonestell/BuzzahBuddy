@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [],
+    "deny": [],
+    "ask": []
+  },
+  "enabledMcpjsonServers": [
+    "memory",
+    "context7",
+    "tree-sitter",
+    "sequential-thinking"
+  ]
+}

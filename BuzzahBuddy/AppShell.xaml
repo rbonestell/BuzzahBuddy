@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="BuzzahBuddy.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:BuzzahBuddy"
+    xmlns:views="clr-namespace:BuzzahBuddy.Views"
+    Title="BuzzahBuddy">
+
+    <TabBar>
+        <ShellContent
+            Title="Home"
+            Icon="home"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="home" />
+
+        <ShellContent
+            Title="Control"
+            Icon="glove"
+            ContentTemplate="{DataTemplate views:GloveControlPage}"
+            Route="control" />
+
+        <ShellContent
+            Title="Devices"
+            Icon="bluetooth"
+            ContentTemplate="{DataTemplate views:DeviceListPage}"
+            Route="devices" />
+
+        <ShellContent
+            Title="Settings"
+            Icon="gear"
+            ContentTemplate="{DataTemplate views:SettingsPage}"
+            Route="settings" />
+    </TabBar>
+
+</Shell>

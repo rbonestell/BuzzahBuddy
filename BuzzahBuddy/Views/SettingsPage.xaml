@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BuzzahBuddy.ViewModels"
+             x:Class="BuzzahBuddy.Views.SettingsPage"
+             x:DataType="vm:SettingsViewModel"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="25">
+
+            <!-- Header -->
+            <Label Text="Settings"
+                   Style="{StaticResource Headline}"
+                   SemanticProperties.HeadingLevel="Level1"
+                   HorizontalOptions="Center" />
+
+            <!-- Device Section -->
+            <VerticalStackLayout Spacing="15">
+                <Label Text="Connected Device"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       SemanticProperties.HeadingLevel="Level2" />
+
+                <Border Padding="15"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}"
+                        StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12" />
+                    </Border.StrokeShape>
+
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="{Binding ConnectedDeviceName}"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               SemanticProperties.Description="Currently connected device" />
+
+                        <Button Text="Disconnect"
+                                Command="{Binding DisconnectDeviceCommand}"
+                                IsEnabled="{Binding IsConnected}"
+                                HeightRequest="48"
+                                CornerRadius="8"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource PastelDanger}, Dark={StaticResource PastelDangerDark}}"
+                                SemanticProperties.Hint="Disconnect from current device"
+                                AutomationId="DisconnectButton" />
+
+                        <Button Text="Find Devices"
+                                Command="{Binding NavigateToDevicesCommand}"
+                                HeightRequest="48"
+                                CornerRadius="8"
+                                SemanticProperties.Hint="Navigate to device scanning page"
+                                AutomationId="FindDevicesButton" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Preferences Section -->
+            <VerticalStackLayout Spacing="15">
+                <Label Text="Preferences"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       SemanticProperties.HeadingLevel="Level2" />
+
+                <Border Padding="15"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}"
+                        StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12" />
+                    </Border.StrokeShape>
+
+                    <VerticalStackLayout Spacing="15">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0"
+                                   Text="Enable Notifications"
+                                   FontSize="16"
+                                   VerticalOptions="Center"
+                                   SemanticProperties.Description="Toggle notifications" />
+                            <Switch Grid.Column="1"
+                                    IsToggled="{Binding EnableNotifications}"
+                                    VerticalOptions="Center"
+                                    SemanticProperties.Hint="Enable or disable notifications"
+                                    AutomationId="NotificationsSwitch" />
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0"
+                                   Text="Auto-Connect to Last Device"
+                                   FontSize="16"
+                                   VerticalOptions="Center"
+                                   LineBreakMode="WordWrap"
+                                   SemanticProperties.Description="Toggle auto-connect" />
+                            <Switch Grid.Column="1"
+                                    IsToggled="{Binding AutoConnect}"
+                                    VerticalOptions="Center"
+                                    SemanticProperties.Hint="Automatically connect to last used device on startup"
+                                    AutomationId="AutoConnectSwitch" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Data Management -->
+            <VerticalStackLayout Spacing="15">
+                <Label Text="Data Management"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       SemanticProperties.HeadingLevel="Level2" />
+
+                <Button Text="Clear All Data"
+                        Command="{Binding ClearDataCommand}"
+                        HeightRequest="56"
+                        FontSize="16"
+                        CornerRadius="12"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource PastelWarning}, Dark={StaticResource PastelWarningDark}}"
+                        SemanticProperties.Hint="Delete all therapy sessions and custom patterns"
+                        SemanticProperties.Description="Clear all stored data"
+                        AutomationId="ClearDataButton" />
+            </VerticalStackLayout>
+
+            <!-- About Section -->
+            <VerticalStackLayout Spacing="15" Margin="0,20,0,0">
+                <Label Text="About"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       SemanticProperties.HeadingLevel="Level2" />
+
+                <Border Padding="15"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SecondaryLight}, Dark={StaticResource Gray900}}"
+                        StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12" />
+                    </Border.StrokeShape>
+
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="BuzzahBuddy"
+                               FontSize="20"
+                               FontAttributes="Bold" />
+                        <Label Text="{Binding AppVersion, StringFormat='Version {0}'}"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}" />
+                        <Label FontSize="14"
+                               LineBreakMode="WordWrap"
+                               Margin="0,10,0,0"
+                               Text="Companion app for the BlueBuzzah vibrotactile glove, designed to help manage Parkinson's symptoms through therapeutic vibration." />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

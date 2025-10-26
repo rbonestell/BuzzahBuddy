@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- BuzzahBuddy Blue Theme -->
+    <color name="colorPrimary">#2ab2ed</color>
+    <color name="colorPrimaryDark">#001826</color>
+    <color name="colorAccent">#0077be</color>
+</resources>
