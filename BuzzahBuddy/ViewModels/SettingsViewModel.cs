@@ -11,134 +11,134 @@ namespace BuzzahBuddy.ViewModels;
 /// </summary>
 public partial class SettingsViewModel : BaseViewModel
 {
-    private readonly IBluetoothService _bluetoothService;
-    private readonly IDataStorageService _storageService;
+	private readonly IBluetoothService _bluetoothService;
+	private readonly IDataStorageService _storageService;
 
-    [ObservableProperty]
-    private bool _isConnected;
+	[ObservableProperty]
+	private bool _isConnected;
 
-    [ObservableProperty]
-    private string _connectedDeviceName = "None";
+	[ObservableProperty]
+	private string _connectedDeviceName = "None";
 
-    [ObservableProperty]
-    private bool _enableNotifications = true;
+	[ObservableProperty]
+	private bool _enableNotifications = true;
 
-    [ObservableProperty]
-    private bool _autoConnect = false;
+	[ObservableProperty]
+	private bool _autoConnect = false;
 
-    [ObservableProperty]
-    private string _appVersion = "1.0.0";
+	[ObservableProperty]
+	private string _appVersion = "0.1.1";
 
-    public SettingsViewModel(
-        IBluetoothService bluetoothService,
-        IDataStorageService storageService)
-    {
-        _bluetoothService = bluetoothService;
-        _storageService = storageService;
+	public SettingsViewModel(
+			IBluetoothService bluetoothService,
+			IDataStorageService storageService)
+	{
+		_bluetoothService = bluetoothService;
+		_storageService = storageService;
 
-        Title = "Settings";
+		Title = "Settings";
 
-        // Subscribe to connection changes
-        _bluetoothService.ConnectionStateChanged += OnConnectionStateChanged;
+		// Subscribe to connection changes
+		_bluetoothService.ConnectionStateChanged += OnConnectionStateChanged;
 
-        // Load settings
-        LoadSettings();
-        UpdateConnectionInfo();
-    }
+		// Load settings
+		LoadSettings();
+		UpdateConnectionInfo();
+	}
 
-    [RelayCommand]
-    private async Task DisconnectDeviceAsync()
-    {
-        if (!IsConnected)
-        {
-            await Shell.Current.DisplayAlert(
-                "Not Connected",
-                "No device is currently connected.",
-                "OK");
-            return;
-        }
+	[RelayCommand]
+	private async Task DisconnectDeviceAsync()
+	{
+		if (!IsConnected)
+		{
+			await Shell.Current.DisplayAlert(
+					"Not Connected",
+					"No device is currently connected.",
+					"OK");
+			return;
+		}
 
-        var confirm = await Shell.Current.DisplayAlert(
-            "Disconnect Device",
-            $"Are you sure you want to disconnect from {ConnectedDeviceName}?",
-            "Yes",
-            "No");
+		var confirm = await Shell.Current.DisplayAlert(
+				"Disconnect Device",
+				$"Are you sure you want to disconnect from {ConnectedDeviceName}?",
+				"Yes",
+				"No");
 
-        if (confirm)
-        {
-            await _bluetoothService.DisconnectAsync();
+		if (confirm)
+		{
+			await _bluetoothService.DisconnectAsync();
 
-            await Shell.Current.DisplayAlert(
-                "Disconnected",
-                "Device disconnected successfully.",
-                "OK");
-        }
-    }
+			await Shell.Current.DisplayAlert(
+					"Disconnected",
+					"Device disconnected successfully.",
+					"OK");
+		}
+	}
 
-    [RelayCommand]
-    private async Task ClearDataAsync()
-    {
-        var confirm = await Shell.Current.DisplayAlert(
-            "Clear All Data",
-            "This will delete all therapy sessions and custom patterns. Are you sure?",
-            "Yes",
-            "No");
+	[RelayCommand]
+	private async Task ClearDataAsync()
+	{
+		var confirm = await Shell.Current.DisplayAlert(
+				"Clear All Data",
+				"This will delete all therapy sessions and custom patterns. Are you sure?",
+				"Yes",
+				"No");
 
-        if (confirm)
-        {
-            await _storageService.ClearAllDataAsync();
+		if (confirm)
+		{
+			await _storageService.ClearAllDataAsync();
 
-            await Shell.Current.DisplayAlert(
-                "Data Cleared",
-                "All data has been cleared successfully.",
-                "OK");
-        }
-    }
+			await Shell.Current.DisplayAlert(
+					"Data Cleared",
+					"All data has been cleared successfully.",
+					"OK");
+		}
+	}
 
-    [RelayCommand]
-    private async Task NavigateToDevicesAsync()
-    {
-        await Shell.Current.GoToAsync("//devices");
-    }
+	[RelayCommand]
+	private async Task NavigateToDevicesAsync()
+	{
+		await Shell.Current.GoToAsync("//devices");
+	}
 
-    partial void OnEnableNotificationsChanged(bool value)
-    {
-        Preferences.Default.Set("EnableNotifications", value);
-    }
+	partial void OnEnableNotificationsChanged(bool value)
+	{
+		Preferences.Default.Set("EnableNotifications", value);
+	}
 
-    partial void OnAutoConnectChanged(bool value)
-    {
-        Preferences.Default.Set("AutoConnect", value);
-    }
+	partial void OnAutoConnectChanged(bool value)
+	{
+		Preferences.Default.Set("AutoConnect", value);
+	}
 
-    private void LoadSettings()
-    {
-        EnableNotifications = Preferences.Default.Get("EnableNotifications", true);
-        AutoConnect = Preferences.Default.Get("AutoConnect", false);
+	private void LoadSettings()
+	{
+		EnableNotifications = Preferences.Default.Get("EnableNotifications", true);
+		AutoConnect = Preferences.Default.Get("AutoConnect", false);
 
-        // Get app version from assembly
-        AppVersion = AppInfo.Current.VersionString;
-    }
+		// Get app version from assembly
+		AppVersion = AppInfo.Current.VersionString;
+	}
 
-    private void UpdateConnectionInfo()
-    {
-        IsConnected = _bluetoothService.CurrentConnectionState == Models.ConnectionState.Connected;
+	private void UpdateConnectionInfo()
+	{
+		IsConnected = _bluetoothService.CurrentConnectionState == Models.ConnectionState.Connected;
 
-        if (IsConnected && _bluetoothService.ConnectedDevice != null)
-        {
-            ConnectedDeviceName = _bluetoothService.ConnectedDevice.Name;
-        }
-        else
-        {
-            ConnectedDeviceName = "None";
-        }
-    }
+		if (IsConnected && _bluetoothService.ConnectedDevice != null)
+		{
+			ConnectedDeviceName = _bluetoothService.ConnectedDevice.Name;
+		}
+		else
+		{
+			ConnectedDeviceName = "None";
+		}
+	}
 
-    private void OnConnectionStateChanged(object? sender, Models.ConnectionState state)
-    {
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            UpdateConnectionInfo();
-        });
-    }
+	private void OnConnectionStateChanged(object? sender, Models.ConnectionState state)
+	{
+		MainThread.BeginInvokeOnMainThread(() =>
+		{
+			UpdateConnectionInfo();
+		});
+	}
 }
