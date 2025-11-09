@@ -1,0 +1,86 @@
+// {
+//     "version": "2.0.0",
+//     "tasks": [
+//         {
+//             "label": "maui: Build iOS",
+//             "command": "dotnet",
+//             "type": "process",
+//             "args": [
+//                 "build",
+//                 "${workspaceFolder}/BuzzahBuddy/BuzzahBuddy.csproj",
+//                 "-f:net9.0-ios",
+//                 "-c:Debug"
+//             ],
+//             "problemMatcher": "$msCompile",
+//             "group": "build"
+//         },
+//         {
+//             "label": "maui: Build Android",
+//             "command": "dotnet",
+//             "type": "process",
+//             "args": [
+//                 "build",
+//                 "${workspaceFolder}/BuzzahBuddy/BuzzahBuddy.csproj",
+//                 "-f:net9.0-android",
+//                 "-c:Debug"
+//             ],
+//             "problemMatcher": "$msCompile",
+//             "group": "build"
+//         },
+//         {
+//             "label": "maui: Run iOS",
+//             "command": "dotnet",
+//             "type": "process",
+//             "args": [
+//                 "build",
+//                 "${workspaceFolder}/BuzzahBuddy/BuzzahBuddy.csproj",
+//                 "-t:Run",
+//                 "-f:net9.0-ios",
+//                 "-c:Debug"
+//             ],
+//             "problemMatcher": "$msCompile",
+//             "isBackground": true,
+//             "presentation": {
+//                 "echo": true,
+//                 "reveal": "always",
+//                 "focus": false,
+//                 "panel": "shared",
+//                 "showReuseMessage": false,
+//                 "clear": false
+//             }
+//         },
+//         {
+//             "label": "maui: Run Android",
+//             "command": "dotnet",
+//             "type": "process",
+//             "args": [
+//                 "build",
+//                 "${workspaceFolder}/BuzzahBuddy/BuzzahBuddy.csproj",
+//                 "-t:Run",
+//                 "-f:net9.0-android",
+//                 "-c:Debug"
+//             ],
+//             "problemMatcher": "$msCompile",
+//             "isBackground": true,
+//             "presentation": {
+//                 "echo": true,
+//                 "reveal": "always",
+//                 "focus": false,
+//                 "panel": "shared",
+//                 "showReuseMessage": false,
+//                 "clear": false
+//             }
+//         },
+//         {
+//             "label": "maui: Clean",
+//             "command": "dotnet",
+//             "type": "process",
+//             "args": [
+//                 "clean",
+//                 "${workspaceFolder}/BuzzahBuddy/BuzzahBuddy.csproj"
+//             ],
+//             "problemMatcher": "$msCompile",
+//             "group": "build"
+//         }
+//     ]
+// }

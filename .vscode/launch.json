@@ -1,0 +1,27 @@
+// {
+//     "version": "0.2.0",
+//     "configurations": [
+//         {
+//             "name": ".NET MAUI (iOS)",
+//             "type": "dotnet-maui",
+//             "request": "launch",
+//             "preLaunchTask": "maui: Run iOS",
+//             "presentation": {
+//                 "hidden": false,
+//                 "group": "MAUI",
+//                 "order": 1
+//             }
+//         },
+//         {
+//             "name": ".NET MAUI (Android)",
+//             "type": "dotnet-maui",
+//             "request": "launch",
+//             "preLaunchTask": "maui: Run Android",
+//             "presentation": {
+//                 "hidden": false,
+//                 "group": "MAUI",
+//                 "order": 2
+//             }
+//         }
+//     ]
+// }

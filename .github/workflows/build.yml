@@ -1,0 +1,28 @@
+name: Build 🏗️
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+    paths:
+      - "BuzzahBuddy/**"
+      - ".github/workflows/build.yml"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0.x"
+      - name: Install Dependencies
+        run: dotnet restore
+      - name: Build Android
+        run: dotnet build -f net9.0-android -c debug --no-restore
+      - name: Build iOS
+        run: dotnet build -f net9.0-ios -c debug --no-restore
+      # Uncomment test step when tests are implemented
+      # - name: Test with the dotnet CLI
+      #   run: dotnet test --no-build

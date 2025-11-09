@@ -34,6 +34,12 @@
 		<NoWarn>$(NoWarn);XC0022;XC0045</NoWarn>
 	</PropertyGroup>
 
+	<!-- Android Debug Configuration -->
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-android' and '$(Configuration)' == 'Debug'">
+		<AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+		<AndroidUseAapt2>true</AndroidUseAapt2>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" />

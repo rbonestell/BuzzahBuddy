@@ -2,6 +2,9 @@
 bin/
 obj/
 
+# Temp Folder
+tmp/
+
 # Claude Code
 .claude/settings.local.json
 
